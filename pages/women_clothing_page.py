@@ -2,14 +2,16 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+
 from base.base_class import Base
 
 
 class WomenClothingPage(Base):
-
+    """Страница с женской одеждой"""
     def __init__(self, driver):
         super().__init__(driver)
         self.driver = driver
+
 
     # Locators
     filter_available = "//label[@for='filter-field-i101']"    # Фильтр Доступен
@@ -21,6 +23,7 @@ class WomenClothingPage(Base):
     sorting = "//div[@class='active']"  # Сортировка
     sort_by_rating = "//label[contains(text(), 'Рейтингу')]"   # Сортировка по рейтингу
     product = "(//div[@class='new-product'])[1]"    # Продукт
+
 
     # Getters
     def get_filter_available(self):
@@ -48,60 +51,73 @@ class WomenClothingPage(Base):
         return WebDriverWait(self.driver, 50).until(EC.element_to_be_clickable((By.XPATH, self.clothing_size_44)))
 
     def get_apply_button_for_slider(self):
-        return WebDriverWait(self.driver, 50).until(EC.element_to_be_clickable((By.XPATH, self.apply_button_for_slider)))
+        return WebDriverWait(self.driver, 50).until(
+            EC.element_to_be_clickable((By.XPATH, self.apply_button_for_slider)))
+
 
     # Actions
-    def check_filter_available(self):       # Выбрать в фильтре Доступен
+    def check_filter_available(self):
+        """Выбрать в фильтре Доступен"""
         self.get_filter_available().click()
         print("Check filter available")
 
-    def click_women_outerwear(self):        # Выбрать раздел Верхняя женская одежда
+    def click_women_outerwear(self):
+        """Выбрать раздел Верхняя женская одежда"""
         self.get_women_outerwear().click()
         print("Click women outerwear")
 
-    def click_apply_button_for_slider(self):        # Нажать кнопку Применить для слайдера
+    def click_apply_button_for_slider(self):
+        """Нажать кнопку Применить для слайдера"""
         self.get_apply_button_for_slider().click()
         print("Click apply button for slider")
 
-    def click_sort_by_rating(self):     # Выбрать сортировку по рейтингу
+    def click_sort_by_rating(self):
+        """Выбрать сортировку по рейтингу"""
         self.get_sort_by_rating().click()
         print("Click sort by rating")
 
-    def click_clothing_size_44(self):       # Выбрать размер одежды 44
+    def click_clothing_size_44(self):
+        """Выбрать размер одежды 44"""
         self.driver.execute_script("window.scrollTo(0, 500);")
         self.get_clothing_size_44().click()
         print("Click clothing size 44")
 
-    def move_left_slider_price(self):       # Перетащить левый слайдер
+    def move_left_slider_price(self):
+        """Перетащить левый слайдер"""
         self.driver.execute_script("window.scrollTo(0, 300);")
         action = ActionChains(self.driver)
         action.click_and_hold(self.get_left_slider_price()).move_by_offset(50, 0).release().perform()
         print("Move left slider price")
 
-    def move_right_slider_price(self):      # Перетащить правый слайдер
+    def move_right_slider_price(self):
+        """Перетащить правый слайдер"""
         action = ActionChains(self.driver)
         action.click_and_hold(self.get_right_slider_price()).move_by_offset(xoffset=-50, yoffset=0).release().perform()
         print("Move right slider price")
 
-    def move_to_sorting(self):      # Навестись на Сортировку
+    def move_to_sorting(self):
+        """Навестись на Сортировку"""
         self.driver.execute_script("window.scrollTo(0, 0);")
         action = ActionChains(self.driver)
         action.move_to_element(self.get_sorting()).perform()
         print("Move to sorting")
 
-    def click_product(self):        # Выбрать продукт
+    def click_product(self):
+        """Выбрать продукт"""
         self.get_product().click()
         print("Select product")
 
+
     # Methods
+    """ Выбор товара """
     def select_product(self):
-        self.get_current_url()
-        self.click_women_outerwear()
-        self.click_clothing_size_44()
-        self.move_left_slider_price()
-        self.move_right_slider_price()
-        self.click_apply_button_for_slider()
-        self.move_to_sorting()
-        self.click_sort_by_rating()
-        self.check_filter_available()
-        self.click_product()
+        self.get_current_url()      # Получаем текущий url
+        self.click_women_outerwear()        # Выбираем женскую верхнюю одежду
+        self.click_clothing_size_44()       # Выбираем 44-ый размер одежды
+        self.move_left_slider_price()       # Двигаем левый слайдер цены
+        self.move_right_slider_price()      # Двигаем правый слайдер цены
+        self.click_apply_button_for_slider()        # Применяем выбранный диапазон цены
+        self.move_to_sorting()      # Наводимся на сортировку
+        self.click_sort_by_rating()     # Выбираем сортировку по рейтингу
+        self.check_filter_available()       # Выбираем в фильтре Доступно
+        self.click_product()        # Выбираем продукт
