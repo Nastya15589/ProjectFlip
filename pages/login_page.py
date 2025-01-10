@@ -3,6 +3,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from base.base_class import Base
+from utilities.logger import Logger
 
 
 class LoginPage(Base):
@@ -73,6 +74,7 @@ class LoginPage(Base):
     # Method
     """ Authorization """
     def authorization(self):
+        Logger.add_start_step(method="authorization")
         self.driver.get(self.url)       # Открываем страницу
         self.driver.maximize_window()       # Раскрываем окно браузера полностью
         self.get_current_url()      # Получаем текущую url
@@ -82,3 +84,4 @@ class LoginPage(Base):
         self.input_password()       # Вводим пароль
         self.click_input_button()       # Нажимаем на кнопку Войти
         self.assert_word(self.get_account(), 'Анастасия')       # Проверяем аккаунт пользователя
+        Logger.add_end_step(url=self.driver.current_url, method="authorization")

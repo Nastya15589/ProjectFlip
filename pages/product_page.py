@@ -3,6 +3,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from base.base_class import Base
+from utilities.logger import Logger
 
 
 class ProductPage(Base):
@@ -110,6 +111,7 @@ class ProductPage(Base):
     # Methods
     """ Получаем информацию о товаре и добавляем его в корзину """
     def add_product(self):
+        Logger.add_start_step(method="add_product")
         self.get_current_url()      # Получаем текущую url
         self.get_list_bread_crumbs()        # Получаем хлебные крошки
         name_brand = self.get_name_brand()      # Получаем производителя товара на странице продукта
@@ -134,4 +136,5 @@ class ProductPage(Base):
             self.click_cart_button()
 
             self.click_go_to_cart()         # Переходим в корзину
+            Logger.add_end_step(url=self.driver.current_url, method="add_product")
             return name_brand, name_model, name_product, price_product, size_model

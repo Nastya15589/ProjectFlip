@@ -4,6 +4,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from base.base_class import Base
+from utilities.logger import Logger
 
 
 class MainPage(Base):
@@ -55,6 +56,8 @@ class MainPage(Base):
     # Methods
     """ Выбираем категорию товара"""
     def select_catalog_section(self):
+        Logger.add_start_step(method="select_catalog_section")
         self.move_to_catalog_of_clothes_shoes_accessories()     # Наводимся на раздел Одежда, обувь и аксессуары
         self.click_catalog_women_clothing()     # Нажимаем на раздел Женской одежды
         self.assert_word(self.get_name_section(), "Женская одежда")     # Проверяем заголовок страницы
+        Logger.add_end_step(url=self.driver.current_url, method="select_catalog_section")

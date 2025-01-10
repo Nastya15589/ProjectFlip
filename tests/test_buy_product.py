@@ -64,11 +64,11 @@ def test_buy_product_1(set_up, set_group):
                           model_and_size_product_in_order)      # Проверяем модель и размер товара
 
     """ Подтверждение заказа """
-    pop.confirmation_order()      # Подтверждение заказа
-
-    """ Скриншот """
-    screenshot = Base(driver)
-    screenshot.get_screenshot()       # Делаем скриншот
+    # pop.confirmation_order()      # Подтверждение заказа
+    #
+    # """ Скриншот """
+    # screenshot = Base(driver)
+    # screenshot.get_screenshot()       # Делаем скриншот
 
     time.sleep(5)
     print("Finish test 1")

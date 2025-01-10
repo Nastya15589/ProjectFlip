@@ -4,6 +4,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from base.base_class import Base
+from utilities.logger import Logger
 
 
 class WomenClothingPage(Base):
@@ -111,6 +112,7 @@ class WomenClothingPage(Base):
     # Methods
     """ Выбор товара """
     def select_product(self):
+        Logger.add_start_step(method="select_product")
         self.get_current_url()      # Получаем текущий url
         self.click_women_outerwear()        # Выбираем женскую верхнюю одежду
         self.click_clothing_size_44()       # Выбираем 44-ый размер одежды
@@ -121,3 +123,4 @@ class WomenClothingPage(Base):
         self.click_sort_by_rating()     # Выбираем сортировку по рейтингу
         self.check_filter_available()       # Выбираем в фильтре Доступно
         self.click_product()        # Выбираем продукт
+        Logger.add_end_step(url=self.driver.current_url, method="select_product")

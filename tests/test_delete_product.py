@@ -8,9 +8,7 @@ from base.base_class import Base
 from pages.cart_page import CartPage
 from pages.login_page import LoginPage
 from pages.main_page import MainPage
-from pages.place_order_page import PlaceOrder
-from pages.product_page import ProductPage
-from pages.women_clothing_page import WomenClothingPage
+
 
 
 # @pytest.mark.order(3)
