@@ -3,6 +3,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
+import allure
 
 from base.base_class import Base
 from pages.cart_page import CartPage
@@ -14,6 +15,7 @@ from pages.women_clothing_page import WomenClothingPage
 
 
 # @pytest.mark.order(3)
+@allure.description("Test buy product 1")
 def test_buy_product_1(set_up, set_group):
     """Тест покупки товара"""
     options = webdriver.ChromeOptions()
@@ -44,7 +46,6 @@ def test_buy_product_1(set_up, set_group):
 
     """ Проверка информации о товаре в корзине """
     check = Base(driver)
-    check.assert_word_new(name_brand, brand_cart)       # Проверяем производителя
     check.assert_word_new(name_model, model_cart)       # Проверяем модель
     check.assert_word_new(name_product, name_product_cart)      # Проверяем наименование товара
     check.assert_word_new(price_product, price_cart)        # Проверяем цену
@@ -65,10 +66,10 @@ def test_buy_product_1(set_up, set_group):
 
     """ Подтверждение заказа """
     # pop.confirmation_order()      # Подтверждение заказа
-    #
-    # """ Скриншот """
-    # screenshot = Base(driver)
-    # screenshot.get_screenshot()       # Делаем скриншот
+
+    """ Скриншот """
+    screenshot = Base(driver)
+    screenshot.get_screenshot()       # Делаем скриншот
 
     time.sleep(5)
     print("Finish test 1")

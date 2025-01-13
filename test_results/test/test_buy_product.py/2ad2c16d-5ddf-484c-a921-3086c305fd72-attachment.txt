@@ -1,0 +1,24 @@
+Enter system
+Start test
+Start test 1
+Current url https://www.flip.kz/
+Click Input
+Click enter with password
+Input mail
+Input password
+Click Input button
+Good value word
+Move to catalog of clothes shoes accessories
+Click catalog women clothing
+Good value word
+Current url https://www.flip.kz/catalog?subsection=3809
+Click women outerwear
+Click clothing size 44
+Move left slider price
+Move right slider price
+Click apply button for slider
+Move to sorting
+Click sort by rating
+Check filter available
+Finish test
+Exit system

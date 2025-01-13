@@ -2,6 +2,7 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import allure
 
 from base.base_class import Base
 from utilities.logger import Logger
@@ -9,10 +10,6 @@ from utilities.logger import Logger
 
 class MainPage(Base):
     """Главная страница"""
-    def __init__(self, driver):
-        super().__init__(driver)
-        self.driver = driver
-
 
     # Locators
     catalog_women_clothing = "((// div[@class ='sub-new'])[2] / ul / li)[1]"    # Раздел женской одежды
@@ -56,8 +53,9 @@ class MainPage(Base):
     # Methods
     """ Выбираем категорию товара"""
     def select_catalog_section(self):
-        Logger.add_start_step(method="select_catalog_section")
-        self.move_to_catalog_of_clothes_shoes_accessories()     # Наводимся на раздел Одежда, обувь и аксессуары
-        self.click_catalog_women_clothing()     # Нажимаем на раздел Женской одежды
-        self.assert_word(self.get_name_section(), "Женская одежда")     # Проверяем заголовок страницы
-        Logger.add_end_step(url=self.driver.current_url, method="select_catalog_section")
+        with allure.step("Select catalog section"):
+            Logger.add_start_step(method="select_catalog_section")
+            self.move_to_catalog_of_clothes_shoes_accessories()     # Наводимся на раздел Одежда, обувь и аксессуары
+            self.click_catalog_women_clothing()     # Нажимаем на раздел Женской одежды
+            self.assert_word(self.get_name_section(), "Женская одежда")     # Проверяем заголовок страницы
+            Logger.add_end_step(url=self.driver.current_url, method="select_catalog_section")

@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -8,10 +9,6 @@ from utilities.logger import Logger
 
 class CartPage(Base):
     """Страница корзина"""
-    def __init__(self, driver):
-        super().__init__(driver)
-        self.driver = driver
-
 
     # Locators
     title_page = "//h1"     # Заголовок страницы
@@ -112,31 +109,33 @@ class CartPage(Base):
     # Method
     """ Информация о товаре в корзине """
     def product_information_in_cart(self):
-        Logger.add_start_step(method="product_information_in_cart")
-        self.get_current_url()      # Получаем текущую url
-        self.assert_word(self.get_title_page(), "Корзина")      # Проверяем заголовок страницы
-        name_product_cart = self.get_name_product_cart()        # Получаем наименование товара
-        brand_cart = self.get_brand_cart().title()      # Получаем производителя товара
-        model_cart = self.get_name_model_cart()     # Получаем модель товара
-        product_size_cart = self.get_product_size_cart()        # Получаем размер товара
-        price_cart = self.get_price_cart()      # Получаем цену товара
-        Logger.add_end_step(url=self.driver.current_url, method="product_information_in_cart")
-        return brand_cart, model_cart, name_product_cart, price_cart, product_size_cart
-
+        with allure.step("Product information in cart"):
+            Logger.add_start_step(method="product_information_in_cart")
+            self.get_current_url()      # Получаем текущую url
+            self.assert_word(self.get_title_page(), "Корзина")      # Проверяем заголовок страницы
+            name_product_cart = self.get_name_product_cart()        # Получаем наименование товара
+            brand_cart = self.get_brand_cart().title()      # Получаем производителя товара
+            model_cart = self.get_name_model_cart()     # Получаем модель товара
+            product_size_cart = self.get_product_size_cart()        # Получаем размер товара
+            price_cart = self.get_price_cart()      # Получаем цену товара
+            Logger.add_end_step(url=self.driver.current_url, method="product_information_in_cart")
+            return brand_cart, model_cart, name_product_cart, price_cart, product_size_cart
 
 
     """ Подтверждение оформления заказа """
     def product_confirmation(self):
-        Logger.add_start_step(method="product_confirmation")
-        self.click_submit_button()
-        Logger.add_end_step(url=self.driver.current_url, method="product_confirmation")
+        with allure.step("Product confirmation"):
+            Logger.add_start_step(method="product_confirmation")
+            self.click_submit_button()
+            Logger.add_end_step(url=self.driver.current_url, method="product_confirmation")
 
 
     """ Удаление товара из корзины """
     def delete_product(self):
-        Logger.add_start_step(method="delete_product")
-        self.get_current_url()      # Получаем текущую url
-        self.assert_word(self.get_title_page(), "Корзина")      # Проверяем заголовок страницы
-        self.click_delete_product()     # Удаляем товар
-        self.assert_word(self.get_empty_cart_message(), "В Вашей корзине пусто :(")     # Проверяем сообщение
-        Logger.add_end_step(url=self.driver.current_url, method="delete_product")
+        with allure.step("Delete product"):
+            Logger.add_start_step(method="delete_product")
+            self.get_current_url()      # Получаем текущую url
+            self.assert_word(self.get_title_page(), "Корзина")      # Проверяем заголовок страницы
+            self.click_delete_product()     # Удаляем товар
+            self.assert_word(self.get_empty_cart_message(), "В Вашей корзине пусто :(")     # Проверяем сообщение
+            Logger.add_end_step(url=self.driver.current_url, method="delete_product")

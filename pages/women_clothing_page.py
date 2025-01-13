@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
@@ -9,10 +10,6 @@ from utilities.logger import Logger
 
 class WomenClothingPage(Base):
     """Страница с женской одеждой"""
-    def __init__(self, driver):
-        super().__init__(driver)
-        self.driver = driver
-
 
     # Locators
     filter_available = "//label[@for='filter-field-i101']"    # Фильтр Доступен
@@ -112,15 +109,16 @@ class WomenClothingPage(Base):
     # Methods
     """ Выбор товара """
     def select_product(self):
-        Logger.add_start_step(method="select_product")
-        self.get_current_url()      # Получаем текущий url
-        self.click_women_outerwear()        # Выбираем женскую верхнюю одежду
-        self.click_clothing_size_44()       # Выбираем 44-ый размер одежды
-        self.move_left_slider_price()       # Двигаем левый слайдер цены
-        self.move_right_slider_price()      # Двигаем правый слайдер цены
-        self.click_apply_button_for_slider()        # Применяем выбранный диапазон цены
-        self.move_to_sorting()      # Наводимся на сортировку
-        self.click_sort_by_rating()     # Выбираем сортировку по рейтингу
-        self.check_filter_available()       # Выбираем в фильтре Доступно
-        self.click_product()        # Выбираем продукт
-        Logger.add_end_step(url=self.driver.current_url, method="select_product")
+        with allure.step("Select product"):
+            Logger.add_start_step(method="select_product")
+            self.get_current_url()      # Получаем текущий url
+            self.click_women_outerwear()        # Выбираем женскую верхнюю одежду
+            self.click_clothing_size_44()       # Выбираем 44-ый размер одежды
+            self.move_left_slider_price()       # Двигаем левый слайдер цены
+            self.move_right_slider_price()      # Двигаем правый слайдер цены
+            self.click_apply_button_for_slider()        # Применяем выбранный диапазон цены
+            self.move_to_sorting()      # Наводимся на сортировку
+            self.click_sort_by_rating()     # Выбираем сортировку по рейтингу
+            self.check_filter_available()       # Выбираем в фильтре Доступно
+            self.click_product()        # Выбираем продукт
+            Logger.add_end_step(url=self.driver.current_url, method="select_product")

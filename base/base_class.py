@@ -29,8 +29,7 @@ class Base:
         """Делаем скриншот экрана"""
         now_date = datetime.datetime.now().strftime("%Y.%m.%d.%H.%M.%S")
         name_screenshot = "screenshot" + now_date + ".png"
-        self.driver.save_screenshot("C:\\Users\\UserNN\\PycharmProjects\\pythonLessons\\ProjectFlip\\screen\\" +
-                                    name_screenshot)
+        self.driver.save_screenshot(".\\ProjectFlip\\screen\\" + name_screenshot)
         print("Скриншот выполнен")
 
 

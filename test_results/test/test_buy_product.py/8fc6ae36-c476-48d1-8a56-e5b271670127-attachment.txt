@@ -1,0 +1,19 @@
+Enter system
+Start test
+Start test 1
+Current url https://www.flip.kz/
+Click Input
+Click enter with password
+Input mail
+Input password
+Click Input button
+Good value word
+Click cart
+Current url https://www.flip.kz/cart
+Good value word
+click delete product
+Good value word
+Скриншот выполнен
+Finish test 1
+Finish test
+Exit system

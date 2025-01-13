@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -8,15 +9,11 @@ from utilities.logger import Logger
 
 class ProductPage(Base):
     """Страница товара"""
-    def __init__(self, driver):
-        super().__init__(driver)
-        self.driver = driver
-
 
     # Locators
     model = "//a[@data-id='0']"    # Выбор модели и расцветки
     size_44 = "(//div[@class='size-color']/label)[1]"    # 44-ый размер
-    cart_button = "//input[@id='cart_button']"  # Добавить в корзину
+    cart_button = "//button[@id='cart_button']"  # Добавить в корзину
     bread_crumbs = "//div[@class='krohi']/a"    # Хлебные крошки
     brand = "(//div[@class='row clothes-groupped-pack']/div)[2]"    # Производитель
     price = "//div[@class='new-price']"     # Цена товара
@@ -111,30 +108,17 @@ class ProductPage(Base):
     # Methods
     """ Получаем информацию о товаре и добавляем его в корзину """
     def add_product(self):
-        Logger.add_start_step(method="add_product")
-        self.get_current_url()      # Получаем текущую url
-        self.get_list_bread_crumbs()        # Получаем хлебные крошки
-        name_brand = self.get_name_brand()      # Получаем производителя товара на странице продукта
-        name_model = self.get_name_model()      # Получаем модель товара на странице продукта
-        name_product = self.get_name_product(name_brand)        # Получаем наименование товара на странице продукта
-        self.select_size()      # Выбираем размер
-        try:
-            self.get_available_button()         # Нажимаем на кнопку добавить товар
-        except:
-            print("Данного товара нет")
-            for i in range(4):
-                size_44 = f"(//div[@class='size-color']/label)[{i+1}]"
-                self.get_size_model()
-                if self.get_available_button():
-                    break
-                else:
-                    continue
-
-        else:
+        with allure.step("Add product"):
+            Logger.add_start_step(method="add_product")
+            self.get_current_url()      # Получаем текущую url
+            self.get_list_bread_crumbs()        # Получаем хлебные крошки
+            name_brand = self.get_name_brand()      # Получаем производителя товара на странице продукта
+            name_model = self.get_name_model()      # Получаем модель товара на странице продукта
+            name_product = self.get_name_product(name_brand)        # Получаем наименование товара на странице продукта
+            self.select_size()      # Выбираем размер
             size_model = self.get_size_model()          # Получаем размер товара на странице продукта
             price_product = self.get_price_product()        # Получаем цену товара на странице продукта
             self.click_cart_button()
-
             self.click_go_to_cart()         # Переходим в корзину
             Logger.add_end_step(url=self.driver.current_url, method="add_product")
             return name_brand, name_model, name_product, price_product, size_model

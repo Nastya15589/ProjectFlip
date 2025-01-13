@@ -1,6 +1,7 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import allure
 
 from base.base_class import Base
 from utilities.logger import Logger
@@ -8,10 +9,6 @@ from utilities.logger import Logger
 
 class LoginPage(Base):
     """Страница авторизации"""
-    def __init__(self, driver):
-        super().__init__(driver)
-        self.driver = driver
-
 
     url = 'https://www.flip.kz/'
 
@@ -74,14 +71,15 @@ class LoginPage(Base):
     # Method
     """ Authorization """
     def authorization(self):
-        Logger.add_start_step(method="authorization")
-        self.driver.get(self.url)       # Открываем страницу
-        self.driver.maximize_window()       # Раскрываем окно браузера полностью
-        self.get_current_url()      # Получаем текущую url
-        self.click_input_link()     # Нажимаем на кнопку Войти
-        self.click_enter_with_password()        # Нажимаем на кнопку Войти с паролем
-        self.input_mail()       # Вводим почту
-        self.input_password()       # Вводим пароль
-        self.click_input_button()       # Нажимаем на кнопку Войти
-        self.assert_word(self.get_account(), 'Анастасия')       # Проверяем аккаунт пользователя
-        Logger.add_end_step(url=self.driver.current_url, method="authorization")
+        with allure.step("Authorization"):
+            Logger.add_start_step(method="authorization")
+            self.driver.get(self.url)       # Открываем страницу
+            self.driver.maximize_window()       # Раскрываем окно браузера полностью
+            self.get_current_url()      # Получаем текущую url
+            self.click_input_link()     # Нажимаем на кнопку Войти
+            self.click_enter_with_password()        # Нажимаем на кнопку Войти с паролем
+            self.input_mail()       # Вводим почту
+            self.input_password()       # Вводим пароль
+            self.click_input_button()       # Нажимаем на кнопку Войти
+            self.assert_word(self.get_account(), 'Анастасия')       # Проверяем аккаунт пользователя
+            Logger.add_end_step(url=self.driver.current_url, method="authorization")

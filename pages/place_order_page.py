@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -8,10 +9,6 @@ from utilities.logger import Logger
 
 class PlaceOrder(Base):
     """Страница оформления заказа"""
-    def __init__(self, driver):
-        super().__init__(driver)
-        self.driver = driver
-
 
     # Locators
     confirm_button = "//input[@class='confirm-order']"      # Кнопка подтвердить заказ
@@ -52,19 +49,21 @@ class PlaceOrder(Base):
     # Method
     """ Получаем информацию о товаре в заказе """
     def product_information_in_order(self):
-        Logger.add_start_step(method="product_information_in_order")
-        self.get_current_url()      # Получаем текущую url
-        self.assert_url("https://www.flip.kz/order?form=preview")       # Проверяем url
-        name_product_in_order = self.get_name_product_in_order()        # Получаем наименование товара в заказе
-        model_and_size_product_in_order = self.get_model_and_size_product_in_order()
-        # Получаем модель и размер товара в заказе
+        with allure.step("Product information in order"):
+            Logger.add_start_step(method="product_information_in_order")
+            self.get_current_url()      # Получаем текущую url
+            self.assert_url("https://www.flip.kz/order?form=preview")       # Проверяем url
+            name_product_in_order = self.get_name_product_in_order()        # Получаем наименование товара в заказе
+            model_and_size_product_in_order = self.get_model_and_size_product_in_order()
+            # Получаем модель и размер товара в заказе
 
-        Logger.add_end_step(url=self.driver.current_url, method="product_information_in_order")
-        return name_product_in_order, model_and_size_product_in_order
+            Logger.add_end_step(url=self.driver.current_url, method="product_information_in_order")
+            return name_product_in_order, model_and_size_product_in_order
 
 
     """ Подтверждаем заказ """
     def confirmation_order(self):
-        Logger.add_start_step(method="confirmation_order")
-        self.click_confirm_button()     # Нажимаем на кнопку подтверждение заказа
-        Logger.add_end_step(url=self.driver.current_url, method="confirmation_order")
+        with allure.step("Confirmation order"):
+            Logger.add_start_step(method="confirmation_order")
+            self.click_confirm_button()     # Нажимаем на кнопку подтверждение заказа
+            Logger.add_end_step(url=self.driver.current_url, method="confirmation_order")

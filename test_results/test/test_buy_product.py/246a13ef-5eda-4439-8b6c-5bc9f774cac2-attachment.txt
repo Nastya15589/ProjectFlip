@@ -1,0 +1,7 @@
+Enter system
+Start test
+Start test 1
+Current url https://www.flip.kz/
+Click Input
+Finish test
+Exit system
